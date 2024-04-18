@@ -1,32 +1,82 @@
 
-{/* document.getElementById('addTaskButton').addEventListener('click', function() {
- // Create a new task bar
- var newTaskBar = document.createElement('div');
- newTaskBar.className = 'col-12';
- newTaskBar.innerHTML = '<div class="m-2 p-2 bg-light text-center text-dark">New Task</div>';
-
- // Find the parent container of the tasks
- var tasksContainer = document.querySelector('.container');
-
- // Find the last row of tasks
- var lastTaskRow = tasksContainer.querySelector('.row:last-child');
-
- // Append the new task bar to the last row of tasks
- lastTaskRow.appendChild(newTaskBar);
-}); */}
-
-
 document.getElementById('addTaskButton').addEventListener('click', function() {
-  // Create a new task item
-  const newTaskItem = document.createElement('li');
-  newTaskItem.className = 'list-group-item text-dark'; // Add Bootstrap classes
-  newTaskItem.innerHTML = 'New Task'; // Set the task content
+    // Cr a new task item
+    const newTaskItem = document.createElement('li');
+    newTaskItem.className = 'list-group-item text-dark d-flex justify-content-between align-items-center'; // Add Bootstrap classes
+   
+    // Cr the task text span
+    const taskTextSpan = document.createElement('span');
+    taskTextSpan.textContent = 'New Task'; // Set the task content
+    newTaskItem.appendChild(taskTextSpan);
+   
+    // Cr the edit button
+    const editButton = document.createElement('button');
+    editButton.type = 'button';
+    editButton.className = 'btn btn-sm btn-outline-secondary edit-btn';
+    editButton.textContent = 'Edit';
+    newTaskItem.appendChild(editButton);
+   
+    // Cr the delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'button';
+    deleteButton.className = 'btn btn-sm btn-outline-danger delete-btn';
+    deleteButton.innerHTML = '<i>Delete</i>';
+    newTaskItem.appendChild(deleteButton);
+   
+    // Find the task list container
+    const taskList = document.getElementById('taskList');
+   
+    // Append the new task item to the task list
+    taskList.appendChild(newTaskItem);
+   
+    // Apply event listeners to the newly created edit and delete buttons
+    applyEditDeleteListeners(editButton, deleteButton, taskTextSpan);
+   });
 
-  // Find the task list container
-  const taskList = document.getElementById('taskList');
+   
 
-  // Append the new task item to the task list
-  taskList.appendChild(newTaskItem);
-  console.log(taskList);
-  console.log(newTaskItem);
-});
+
+
+
+    // Edit
+   function applyEditDeleteListeners(editButton, deleteButton, taskTextSpan) {
+   
+    editButton.addEventListener('click', function() {
+       const taskContent = taskTextSpan.textContent; // Get the current task content
+   
+       // Create an input element to edit the task
+       const taskInput = document.createElement('input');
+       taskInput.type = 'text';
+       taskInput.value = taskContent;
+   
+       // Replace the task text with the input element
+       taskTextSpan.parentNode.replaceChild(taskInput, taskTextSpan);
+   
+       // Handle saving the edited task
+       taskInput.addEventListener('blur', function() {
+         const newTaskContent = this.value; // Get the edited content
+         taskTextSpan.textContent = newTaskContent; // Update the task text
+         this.parentNode.replaceChild(taskTextSpan, this); // Replace the input element back with the task text span
+       });
+    });
+   
+    // Delete (first get the parent task item (li) and then delete child)
+    deleteButton.addEventListener('click', function() {
+       const taskItem = this.parentElement; 
+       taskItem.parentNode.removeChild(taskItem);
+    });
+   }
+   
+
+
+   // Apply event listeners to existing tasks on page load
+   document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('.edit-btn');
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    const taskTextSpans = document.querySelectorAll('#taskText');
+   
+    editButtons.forEach((button, index) => {
+       applyEditDeleteListeners(button, deleteButtons[index], taskTextSpans[index]);
+    });
+   });
+   
