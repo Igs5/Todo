@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <title>TodoList</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <title>Todolist2</title>
 </head>
 <body>
+    <div class="container bg-secondary text-white p-4" style="width: 50%;">
+        <h1 class="text-center">Hello! Today</h1>
 
+        <div class="row">
+            <div class="col-12">
+                <div class="m-2 p-2 bg-light text-center text-dark"><button id="addTaskButton" class="btn btn-primary">Add Task</button>
+                </div>
+            </div>
+        </div>
+
+        <ul id="taskList" class="list-group m-2 p-2 bg-light text-center text-dark"></ul>  
     
+
+        <div class="row">
+           <div class="col-12">
+             <div class="m-2 p-2 bg-light text-center text-dark">Reading</div>
+           </div>
+
+        </div>
+
+    </div> 
+
+        
+
+
+       <script src="./script.js"></script> 
 </body>
 </html>
